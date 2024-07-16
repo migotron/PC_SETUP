@@ -6,8 +6,14 @@ Set-TimeZone "Central Standard Time"
 
 $wholeserialNumber = (Get-WmiObject Win32_BIOS).SerialNumber
 $serialNumber = $wholeserialNumber.Substring($wholeserialNumber.Length - 7)
-$newName = "DESKTOP-$serialNumber"
+# Get the prefix from the user
+$prefix = Read-Host "Enter the prefix for the PC name: "
+# Combine the prefix and serial number
+$newName = "$prefix-$serialNumber"
+# Rename the computer
 Rename-Computer -NewName $newName -Force
+# Print a success message
+Write-Host "Computer name has been changed to $newName"
 
 $UserName = Read-Host "Enter the user's name"
 
